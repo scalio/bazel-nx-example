@@ -1,0 +1,24 @@
+{
+  "npmScope": "lazy",
+  "implicitDependencies": {
+    "angular.json": "*",
+    "package.json": "*",
+    "tsconfig.json": "*",
+    "tslint.json": "*",
+    "nx.json": "*"
+  },
+  "projects": {
+    "lazy-loading-app": {
+      "tags": []
+    },
+    "lazy-loading-app-e2e": {
+      "tags": []
+    },
+    "api": {
+      "tags": []
+    },
+    "api-interface": {
+      "tags": []
+    }
+  }
+}
