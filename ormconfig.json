@@ -1,0 +1,10 @@
+{
+  "type": "postgres",
+  "host": "172.21.0.2",
+  "port": "5432",
+  "username": "postgres",
+  "password": "example",
+  "database": "borscht",
+  "entities": ["apps/api/src/**/**.entity.ts"],
+  "synchronize": true
+}
