@@ -8,7 +8,7 @@ export class User {
   @Column({ length: 500 })
   username: string;
 
-  @Column({ length: 500 })
+  @Column({ length: 500, nullable: true })
   password: string | undefined;
 
   @Column({ length: 500 })

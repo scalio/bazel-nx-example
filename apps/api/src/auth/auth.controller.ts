@@ -3,7 +3,7 @@ import { User } from '../user/user.entity';
 import { UserService } from '../user/user.service';
 import { AuthService } from './auth.service';
 
-@Controller('/api/auth')
+@Controller('/auth')
 export class AuthController {
   private logger = new Logger(AuthController.name);
 
@@ -27,7 +27,7 @@ export class AuthController {
       }
     }
 
-    return res.status(HttpStatus.FORBIDDEN).json({ message: 'Username or passwod wrong!' });
+    return res.status(HttpStatus.FORBIDDEN).json({ message: 'Username or password wrong!' });
   }
 
   @Post('register')
