@@ -5,6 +5,8 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
+    "start:prod": "ng serve --prod",
+    "start:api": "ng serve api",
     "build": "ng build",
     "test": "ng test",
     "lint": "./node_modules/.bin/nx lint && ng lint",
@@ -36,8 +38,8 @@
     "@angular/platform-browser": "^7.0.0",
     "@angular/platform-browser-dynamic": "^7.0.0",
     "@angular/router": "^7.0.0",
-    "@nestjs/common": "6.0.4",
-    "@nestjs/core": "6.0.4",
+    "@nestjs/common": "6.0.5",
+    "@nestjs/core": "6.0.5",
     "@nestjs/graphql": "^6.0.3",
     "@nestjs/jwt": "^6.0.0",
     "@nestjs/passport": "^6.0.0",
@@ -65,7 +67,7 @@
     "@angular/compiler-cli": "~7.2.0",
     "@angular/language-service": "^7.0.0",
     "@nestjs/schematics": "6.1.0",
-    "@nestjs/testing": "6.0.4",
+    "@nestjs/testing": "6.0.5",
     "@nrwl/builders": "7.7.2",
     "@nrwl/schematics": "7.7.2",
     "@types/jest": "24.0.11",
@@ -80,6 +82,6 @@
     "ts-jest": "24.0.1",
     "ts-node": "~7.0.0",
     "tslint": "~5.14.0",
-    "typescript": "3.4.1"
+    "typescript": ">=3.1.1 <3.3.0"
   }
 }
