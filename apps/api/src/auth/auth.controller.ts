@@ -1,4 +1,4 @@
-import { Body, Controller, HttpStatus, Logger, Post, Response } from '@nestjs/common';
+import { Body, Controller, HttpCode, HttpStatus, Logger, Post, Response } from '@nestjs/common';
 import { User } from '../user/user.entity';
 import { UserService } from '../user/user.service';
 import { AuthService } from './auth.service';
@@ -13,6 +13,7 @@ export class AuthController {
   ) {}
 
   @Post('login')
+  @HttpCode(200)
   async loginUser(@Response() res: any, @Body() body: User) {
     this.logger.log('loginUser called');
     if (!(body && body.username && body.password)) {
