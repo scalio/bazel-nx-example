@@ -1,13 +1,22 @@
-import { Component } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
-import { Message } from "@lazy/api-interface";
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
-@Component({
-  selector: "lazy-root",
-  templateUrl: "./app.component.html",
-  styleUrls: ["./app.component.scss"]
-})
+import { User } from './_models';
+import { AuthenticationService } from './_services';
+
+@Component({ selector: 'lazy-root', templateUrl: 'app.component.html' })
 export class AppComponent {
-  hello$ = this.http.get<Message>("/api/hello");
-  constructor(private http: HttpClient) {}
+  currentUser: User;
+
+  constructor(
+    private router: Router,
+    private authenticationService: AuthenticationService,
+  ) {
+    this.authenticationService.currentUser.subscribe((x) => this.currentUser = x);
+  }
+
+  logout() {
+    this.authenticationService.logout();
+    this.router.navigate(['/login']);
+  }
 }
