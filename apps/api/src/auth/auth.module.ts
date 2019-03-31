@@ -5,6 +5,7 @@ import { PassportModule } from '@nestjs/passport';
 import { UserModule } from '../user/user.module';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
+import { GqlAuthGuard } from './graphql-auth.guard';
 import { JwtStrategy } from './jwt.strategy';
 
 @Module({
@@ -24,6 +25,7 @@ import { JwtStrategy } from './jwt.strategy';
   providers: [
     AuthService,
     JwtStrategy,
+    GqlAuthGuard,
   ],
   exports: [
     AuthService,

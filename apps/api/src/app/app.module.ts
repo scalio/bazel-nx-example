@@ -26,6 +26,7 @@ const ormConfig = require('../../../../ormconfig.json');
     GraphQLModule.forRoot({
       typePaths: ['./**/*.graphql'],
       installSubscriptionHandlers: true,
+      context: ({ req }) => ({ req }),
     }),
     PassportModule.register({ defaultStrategy: 'jwt' }),
   ],
