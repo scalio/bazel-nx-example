@@ -4,6 +4,10 @@ networks:
   corp:
     driver: bridge
 
+volumes:
+  database_data:
+    driver: local
+
 services:
   api:
     container_name: lazy-api
@@ -26,6 +30,8 @@ services:
   db:
     image: postgres
     restart: always
+    volumes:
+      - database_data:/var/lib/postgresql/data
     networks:
       - corp
     environment:
