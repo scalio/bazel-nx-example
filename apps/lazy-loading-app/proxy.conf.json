@@ -2,5 +2,9 @@
   "/api": {
     "target": "http://api:3333",
     "secure": false
+  },
+  "/graphql": {
+    "target": "http://api:3333",
+    "secure": false
   }
 }

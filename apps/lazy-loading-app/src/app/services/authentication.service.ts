@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { User } from '../_models';
+import { User } from '../models';
 
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
@@ -26,7 +26,7 @@ export class AuthenticationService {
                 // login successful if there's a jwt token in the response
                 if (user && user.token) {
                     // store user details and jwt token in local storage to keep user logged in between page refreshes
-                    localStorage.setItem('currentUser', JSON.stringify(user));
+                    localStorage.setItem('currentUser', JSON.stringify({ ...user, username }));
                     this.currentUserSubject.next(user);
                 }
 
