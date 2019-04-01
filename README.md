@@ -8,10 +8,10 @@ It also uses such cool technologies as Angular, Nest, Swagger, GraphQL, Passport
 
 ## Build & Run
 
-Run `docker-compose up --build` to build and run the project.
+Run `docker-compose up --build` to build and run the project. The app should be available at `http://localhost:4200/`
 
 ## Development tools
 
-You can use the  GraphQL Playground at `localhost:3333/graphql`.
+You can use the  GraphQL Playground at `http://localhost:3333/graphql`.
 
-You can see the Swagger documentation for REST API at `localhost:3333/swagger`.
+You can see the Swagger documentation for REST API at `http://localhost:3333/swagger`.
