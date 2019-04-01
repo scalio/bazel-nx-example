@@ -49,6 +49,5 @@ export class HomeComponent implements OnInit, OnDestroy {
           query: GET_CATS,
         })
         .valueChanges.pipe(map(({ data }) => data.getCats));
-      this.cats.subscribe((val) => { console.log('!!', val); });
     }
 }

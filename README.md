@@ -4,8 +4,7 @@ and [Nest.js](https://nestjs.com/) frameworks.
 This project was generated using [Nx](https://nx.dev).
 
 The full list of cool technologies used in this project:
-- **Lazy loading** of each module at the **Angular** app to solve the problem of
-an overly large default JS bundle size on large projects.
+- **Lazy loading** of each module at the **Angular** app.
 - **Monorepo** architecture using **Nx** that allows TypeScript
 interfaces to be shared between frontend and backend.
 - **Swagger** module for documentation.
