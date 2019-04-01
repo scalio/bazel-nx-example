@@ -1,4 +1,5 @@
 import { Body, Controller, HttpCode, HttpStatus, Logger, Post, Response } from '@nestjs/common';
+import { LoginUserDto } from '../user/login-user.dto';
 import { User } from '../user/user.entity';
 import { UserService } from '../user/user.service';
 import { AuthService } from './auth.service';
@@ -14,7 +15,7 @@ export class AuthController {
 
   @Post('login')
   @HttpCode(200)
-  async loginUser(@Response() res: any, @Body() body: User) {
+  async loginUser(@Response() res: any, @Body() body: LoginUserDto) {
     this.logger.log('loginUser called');
     if (!(body && body.username && body.password)) {
       return res.status(HttpStatus.FORBIDDEN).json({ message: 'Username and password are required!' });
