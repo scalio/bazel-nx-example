@@ -4,17 +4,21 @@ import gql from 'graphql-tag';
 import { Observable, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { User } from '../models';
-import { AuthenticationService, UserService } from '../services';
+import { Cat, User } from '../models';
+import { AuthenticationService } from '../services';
 
 const GET_CATS = gql`
-{
+query Cats {
   getCats {
     id
     name
     age
   }
 }`;
+
+interface Response {
+  getCats: Cat[];
+}
 
 @Component({ templateUrl: 'home.component.html' })
 export class HomeComponent implements OnInit, OnDestroy {
@@ -24,7 +28,6 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   constructor(
         private authenticationService: AuthenticationService,
-        private userService: UserService,
         private apollo: Apollo,
     ) {
         this.currentUserSubscription = this.authenticationService.currentUser.subscribe((user) => {
@@ -42,9 +45,10 @@ export class HomeComponent implements OnInit, OnDestroy {
 
     private loadAllCats() {
       this.cats = this.apollo
-        .watchQuery({
+        .watchQuery<Response>({
           query: GET_CATS,
         })
-        .valueChanges.pipe(map((result) => result.data));
+        .valueChanges.pipe(map(({ data }) => data.getCats));
+      this.cats.subscribe((val) => { console.log('!!', val); });
     }
 }

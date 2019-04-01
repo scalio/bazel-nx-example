@@ -30,8 +30,6 @@ services:
   db:
     image: postgres
     restart: always
-    volumes:
-      - database_data:/var/lib/postgresql/data
     networks:
       - corp
     environment:

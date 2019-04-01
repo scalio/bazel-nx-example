@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { first } from 'rxjs/operators';
 
-import { AlertService, AuthenticationService, UserService } from '../services';
+import { AlertService, AuthenticationService } from '../services';
 
 @Component({templateUrl: 'register.component.html'})
 export class RegisterComponent implements OnInit {
@@ -15,7 +15,6 @@ export class RegisterComponent implements OnInit {
         private formBuilder: FormBuilder,
         private router: Router,
         private authenticationService: AuthenticationService,
-        private userService: UserService,
         private alertService: AlertService,
     ) {
         // redirect to home if already logged in
@@ -45,15 +44,15 @@ export class RegisterComponent implements OnInit {
         }
 
         this.loading = true;
-        this.userService.register(this.registerForm.value)
+        this.authenticationService.register(this.registerForm.value)
             .pipe(first())
             .subscribe(
-                (data) => {
+                () => {
                     this.alertService.success('Registration successful', true);
                     this.router.navigate(['/login']);
                 },
-                (error) => {
-                    this.alertService.error(error);
+                ({ error: { message } }) => {
+                    this.alertService.error(message);
                     this.loading = false;
                 });
     }

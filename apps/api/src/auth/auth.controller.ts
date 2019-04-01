@@ -50,9 +50,6 @@ export class AuthController {
       return res.status(HttpStatus.FORBIDDEN).json({ message: 'Username already exists!'});
     } else {
       user = await this.userService.createUser(body);
-      if (user) {
-        user.passwordHash = undefined;
-      }
     }
 
     return res.status(HttpStatus.OK).json(await this.authService.createToken(user.username));

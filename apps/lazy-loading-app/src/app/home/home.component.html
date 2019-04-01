@@ -2,7 +2,7 @@
 <p>You're logged in!</p>
 <h3>List of cats:</h3>
 <ul>
-    <li *ngFor="let cat of (cats | async)?.getCats">
+    <li *ngFor="let cat of cats | async">
         {{cat.name}} ({{cat.age}} years old)
     </li>
 </ul>

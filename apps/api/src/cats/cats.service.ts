@@ -1,7 +1,7 @@
+import { CreateCatInput } from '@lazy/api-interface';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { CreateCatInput } from '../graphql.schema';
 import { CatEntity } from './cat.entity';
 
 @Injectable()

@@ -3,25 +3,23 @@ import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 
-import { AlertComponent } from './components';
+// import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { routing } from './app.routing';
-import { HomeComponent } from './home';
-import { LoginComponent } from './login';
-import { RegisterComponent } from './register';
+import { AlertComponent } from './components';
 import { GraphQLModule } from './graphql.module';
+import { LoginComponent } from './login';
 
 @NgModule({
   declarations: [
     AlertComponent,
     AppComponent,
     LoginComponent,
-    RegisterComponent,
-    HomeComponent,
   ],
   imports: [
     ReactiveFormsModule,
     BrowserModule,
+    // AppRoutingModule,
     HttpClientModule,
     routing,
     GraphQLModule,

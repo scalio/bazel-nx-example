@@ -4,7 +4,6 @@ import {HttpLink, HttpLinkModule} from 'apollo-angular-link-http';
 import {InMemoryCache} from 'apollo-cache-inmemory';
 import { setContext } from 'apollo-link-context';
 
-const uri = '/graphql';
 export function createApollo(httpLink: HttpLink) {
   const http = httpLink.create({uri: '/graphql'});
   const auth = setContext((_, { headers }) => {
