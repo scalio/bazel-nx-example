@@ -15,12 +15,16 @@ export class AuthService {
 
   async createToken(username: string) {
     this.logger.log('create Token');
-    const user: JwtPayload = { username };
+    const { firstName, lastName } = await this.userService.getUserByUsername(username);
+    const payload: JwtPayload = { username, firstName, lastName };
 
-    const token = this.jwtService.sign(user);
+    const token = this.jwtService.sign(payload);
     return {
       expiresIn: this.expiresIn,
       token,
+      username,
+      firstName,
+      lastName,
     };
   }
 

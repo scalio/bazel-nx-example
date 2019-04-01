@@ -4,6 +4,7 @@ import { PassportModule } from '@nestjs/passport';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { AuthModule } from '../auth/auth.module';
+import { CatEntity } from '../cats/cat.entity';
 import { CatsModule } from '../cats/cats.module';
 import { UserModule } from '../user/user.module';
 import { AppController } from './app.controller';
@@ -21,7 +22,7 @@ const ormConfig = require('../../../../ormconfig.json');
     CatsModule,
     TypeOrmModule.forRoot({
       ...ormConfig,
-      entities: [User],
+      entities: [User, CatEntity],
     }),
     GraphQLModule.forRoot({
       typePaths: ['./**/*.graphql'],

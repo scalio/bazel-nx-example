@@ -1,10 +1,10 @@
 ﻿import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Apollo } from 'apollo-angular';
 import gql from 'graphql-tag';
-import {Apollo} from 'apollo-angular';
 import { Observable, Subscription } from 'rxjs';
-import { first, map } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 
-import { Cat, User } from '../models';
+import { User } from '../models';
 import { AuthenticationService, UserService } from '../services';
 
 const GET_CATS = gql`
@@ -33,29 +33,18 @@ export class HomeComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        // this.loadAllUsers();
+      this.loadAllCats();
+    }
+
+    ngOnDestroy() {
+        this.currentUserSubscription.unsubscribe();
+    }
+
+    private loadAllCats() {
       this.cats = this.apollo
         .watchQuery({
           query: GET_CATS,
         })
         .valueChanges.pipe(map((result) => result.data));
-      // this.cats.subscribe((val) => console.log(JSON.stringify(val)));
     }
-
-    ngOnDestroy() {
-        // unsubscribe to ensure no memory leaks
-        this.currentUserSubscription.unsubscribe();
-    }
-
-    deleteUser(id: number) {
-        this.userService.delete(id).pipe(first()).subscribe(() => {
-            // this.loadAllUsers();
-        });
-    }
-
-    // private loadAllUsers() {
-    //     this.userService.getAll().pipe(first()).subscribe((users) => {
-    //         this.cats = users;
-    //     });
-    // }
 }

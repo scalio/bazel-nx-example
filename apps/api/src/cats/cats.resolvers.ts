@@ -2,7 +2,7 @@ import { Logger, ParseIntPipe, UseGuards } from '@nestjs/common';
 import { Args, Mutation, Query, Resolver, Subscription } from '@nestjs/graphql';
 import { PubSub } from 'graphql-subscriptions';
 import { GqlAuthGuard } from '../auth/graphql-auth.guard';
-import { Cat } from '../graphql.schema';
+import { CatEntity } from './cat.entity';
 import { CatsService } from './cats.service';
 import { CreateCatDto } from './dto/create-cat.dto';
 
@@ -25,14 +25,14 @@ export class CatsResolvers {
   async findOneById(
     @Args('id', ParseIntPipe)
     id: number,
-  ): Promise<Cat> {
+  ): Promise<CatEntity> {
     this.logger.log('getCat called');
     return await this.catsService.findOneById(id);
   }
 
   @Mutation('createCat')
   @UseGuards(GqlAuthGuard)
-  async create(@Args('createCatInput') args: CreateCatDto): Promise<Cat> {
+  async create(@Args('createCatInput') args: CreateCatDto): Promise<CatEntity> {
     this.logger.log('createCat called');
     const createdCat = await this.catsService.create(args);
     pubSub.publish('catCreated', { catCreated: createdCat });

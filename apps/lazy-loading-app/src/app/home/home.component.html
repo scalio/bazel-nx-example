@@ -1,8 +1,8 @@
-﻿<h1>Hi {{currentUser.username}}!</h1>
+﻿<h1>Hi {{currentUser.firstName}}!</h1>
 <p>You're logged in!</p>
 <h3>List of cats:</h3>
 <ul>
-    <li *ngFor="let user of cats.getCats | async">
-        {{user.id}} ({{user.cat}} {{user.age}})
+    <li *ngFor="let cat of (cats | async)?.getCats">
+        {{cat.name}} ({{cat.age}} years old)
     </li>
 </ul>

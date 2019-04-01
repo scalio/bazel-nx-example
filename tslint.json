@@ -13,6 +13,7 @@
     },
     "forin": true,
     "import-blacklist": [true, "rxjs/Rx"],
+    "interface-name": false,
     "interface-over-type-literal": true,
     "max-classes-per-file": false,
     "member-access": false,

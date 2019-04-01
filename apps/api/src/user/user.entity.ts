@@ -12,6 +12,14 @@ export class User {
 
   @ApiModelProperty()
   @Column({ length: 500, nullable: true })
+  firstName: string;
+
+  @ApiModelProperty()
+  @Column({ length: 500, nullable: true })
+  lastName: string;
+
+  @ApiModelProperty()
+  @Column({ length: 500, nullable: true })
   password: string | undefined;
 
   @Column({ length: 500 })
