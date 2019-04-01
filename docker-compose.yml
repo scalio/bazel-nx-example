@@ -4,10 +4,6 @@ networks:
   corp:
     driver: bridge
 
-volumes:
-  database_data:
-    driver: local
-
 services:
   api:
     container_name: lazy-api
