@@ -1,12 +1,13 @@
-FROM node:8
+FROM node:12.2-alpine
+RUN apk --no-cache add --virtual builds-deps build-base python
 
 WORKDIR /usr/src/app
-COPY package*.json ./
-RUN npm install
+COPY package.json yarn.lock ./
+RUN yarn install
 
-COPY . .
-RUN npx ng build --prod
+COPY tsconfig.json angular.json ormconfig.json ./
+COPY ./apps ./apps
+COPY ./libs ./libs
 
 EXPOSE 4200
-# CMD [ "npm", "run", "start:prod" ]
-CMD npx ng serve --prod --host 0.0.0.0
+CMD yarn build --prod && yarn start:prod --host 0.0.0.0

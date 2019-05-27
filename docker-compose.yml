@@ -13,16 +13,22 @@ services:
       context: .
       dockerfile: server.dockerfile
     ports:
-      - "3333:3333"
-  lazy-app:
-    container_name: lazy-app
+      - 3333:3333
+    volumes:
+      - "./apps:/usr/src/app/apps:ro"
+      - "./libs:/usr/src/app/libs:ro"
+  app:
     networks:
       - corp
     build:
       context: .
       dockerfile: client.dockerfile
     ports:
-      - "4200:4200"
+      - 4200:4200
+    command: npx ng serve --host 0.0.0.0
+    volumes:
+      - "./apps:/usr/src/app/apps:ro"
+      - "./libs:/usr/src/app/libs:ro"
   db:
     image: postgres
     restart: always
