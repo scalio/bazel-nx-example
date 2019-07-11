@@ -6,7 +6,7 @@ import { LoginComponent } from './login';
 const appRoutes: Routes = [
   {
     path: 'home',
-    loadChildren: './home/home.module#HomeModule',
+    loadChildren: () => import('./home/home.module').then(m => m.HomeModule),
     canActivate: [AuthGuard],
   },
   {
@@ -15,7 +15,7 @@ const appRoutes: Routes = [
   },
   {
     path: 'register',
-    loadChildren: './register/register.module#RegisterModule',
+    loadChildren: () => import('./register/register.module').then(m => m.RegisterModule),
   },
 
   { path: '**', redirectTo: '/login' },
