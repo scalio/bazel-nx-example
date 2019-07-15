@@ -1,3 +1,5 @@
+// This is a backup file of the original angular.json. This file is needed in case you want to revert to the workflow without Bazel.
+
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
@@ -15,27 +17,57 @@
       },
       "architect": {
         "build": {
-          "builder": "@angular/bazel:build",
+          "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "targetLabel": "//apps/lazy-loading-app/src:prodapp",
-            "bazelCommand": "build"
+            "outputPath": "dist/apps/lazy-loading-app",
+            "index": "apps/lazy-loading-app/src/index.html",
+            "main": "apps/lazy-loading-app/src/main.ts",
+            "polyfills": "apps/lazy-loading-app/src/polyfills.ts",
+            "tsConfig": "apps/lazy-loading-app/tsconfig.app.json",
+            "assets": [
+              "apps/lazy-loading-app/src/favicon.ico",
+              "apps/lazy-loading-app/src/assets"
+            ],
+            "styles": ["apps/lazy-loading-app/src/styles.scss"],
+            "scripts": [],
+            "es5BrowserSupport": true
           },
           "configurations": {
             "production": {
-              "targetLabel": "//apps/lazy-loading-app/src:prodapp"
+              "fileReplacements": [
+                {
+                  "replace": "apps/lazy-loading-app/src/environments/environment.ts",
+                  "with": "apps/lazy-loading-app/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ]
             }
           }
         },
         "serve": {
-          "builder": "@angular/bazel:build",
+          "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "targetLabel": "//apps/lazy-loading-app/src:devserver",
-            "bazelCommand": "run",
-            "watch": true
+            "browserTarget": "lazy-loading-app:build",
+            "proxyConfig": "apps/lazy-loading-app//proxy.conf.json"
           },
           "configurations": {
             "production": {
-              "targetLabel": "//apps/lazy-loading-app/src:prodserver"
+              "browserTarget": "lazy-loading-app:build:production"
             }
           }
         },
@@ -56,10 +88,11 @@
           }
         },
         "test": {
-          "builder": "@angular/bazel:build",
+          "builder": "@nrwl/jest:jest",
           "options": {
-            "bazelCommand": "test",
-            "targetLabel": "//apps/lazy-loading-app/src:test"
+            "jestConfig": "apps/lazy-loading-app/jest.config.js",
+            "tsConfig": "apps/lazy-loading-app/tsconfig.spec.json",
+            "setupFile": "apps/lazy-loading-app/src/test-setup.ts"
           }
         }
       }
@@ -70,14 +103,15 @@
       "prefix": "",
       "architect": {
         "e2e": {
-          "builder": "@angular/bazel:build",
+          "builder": "@nrwl/builders:cypress",
           "options": {
-            "bazelCommand": "test",
-            "targetLabel": "//apps/lazy-loading-app-e2e/src:devserver_test"
+            "cypressConfig": "apps/lazy-loading-app-e2e/cypress.json",
+            "tsConfig": "apps/lazy-loading-app-e2e/tsconfig.e2e.json",
+            "devServerTarget": "lazy-loading-app:serve"
           },
           "configurations": {
             "production": {
-              "targetLabel": "//apps/lazy-loading-app-e2e/src:prodserver_test"
+              "devServerTarget": "lazy-loading-app:serve:production"
             }
           }
         },

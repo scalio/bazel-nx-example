@@ -10,4 +10,4 @@ COPY ./apps ./apps
 COPY ./libs ./libs
 
 EXPOSE 3333
-CMD yarn run start:api
+CMD yarn run start api

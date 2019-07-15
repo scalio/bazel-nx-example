@@ -1,12 +1,16 @@
-﻿import { RouterModule, Routes } from '@angular/router';
+﻿import { ModuleWithProviders } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './guards';
+import { HomeComponent } from './home/home.component';
 
 import { LoginComponent } from './login';
+import { RegisterComponent } from './register';
 
 const appRoutes: Routes = [
   {
     path: 'home',
-    loadChildren: () => import('./home/home.module').then(m => m.HomeModule),
+    component: HomeComponent,
+    // loadChildren: () => import('./home/home.module').then((m) => m.HomeModule),
     canActivate: [AuthGuard],
   },
   {
@@ -15,10 +19,11 @@ const appRoutes: Routes = [
   },
   {
     path: 'register',
-    loadChildren: () => import('./register/register.module').then(m => m.RegisterModule),
+    component: RegisterComponent,
+    // loadChildren: () => import('./register/register.module').then((m) => m.RegisterModule),
   },
 
   { path: '**', redirectTo: '/login' },
 ];
 
-export const routing = RouterModule.forRoot(appRoutes);
+export const routing: ModuleWithProviders<RouterModule> = RouterModule.forRoot(appRoutes);

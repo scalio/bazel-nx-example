@@ -4,6 +4,7 @@
   "license": "MIT",
   "scripts": {
     "ng": "ng",
+    "postinstall": "ngc -p ./angular-metadata.tsconfig.json",
     "start": "ng serve",
     "start:prod": "ng serve --prod",
     "build": "ng build",
@@ -72,9 +73,15 @@
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.801.1",
+    "@angular/bazel": "^8.1.1",
     "@angular/cli": "8.1.1",
     "@angular/compiler-cli": "~8.1.1",
     "@angular/language-service": "^8.1.1",
+    "@bazel/bazel": "^0.27.0",
+    "@bazel/hide-bazel-files": "0.32.2",
+    "@bazel/ibazel": "^0.10.2",
+    "@bazel/karma": "0.32.2",
+    "@bazel/typescript": "0.32.2",
     "@nestjs/schematics": "6.3.0",
     "@nestjs/testing": "6.5.2",
     "@types/jest": "24.0.15",

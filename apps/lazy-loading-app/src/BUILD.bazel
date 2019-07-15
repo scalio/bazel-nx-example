@@ -1,0 +1,114 @@
+package(default_visibility = ["//visibility:public"])
+
+load("@npm_angular_bazel//:index.bzl", "ng_module")
+load("@build_bazel_rules_nodejs//:defs.bzl", "history_server", "rollup_bundle")
+load("@build_bazel_rules_nodejs//:defs.bzl", "history_server", "rollup_bundle")
+load("@build_bazel_rules_nodejs//internal/web_package:web_package.bzl", "web_package")
+load("@npm_bazel_typescript//:index.bzl", "ts_devserver", "ts_library")
+load("@io_bazel_rules_sass//:defs.bzl", "multi_sass_binary", "sass_binary")
+
+sass_binary(
+    name = "global_stylesheet",
+    src = glob([
+        "styles.css",
+        "styles.scss",
+    ])[0],
+    output_name = "global_stylesheet.css",
+)
+
+multi_sass_binary(
+    name = "styles",
+    srcs = glob(
+        include = ["**/*.scss"],
+        exclude = ["styles.scss"],
+    ),
+)
+
+ng_module(
+    name = "src",
+    srcs = glob(
+        include = ["**/*.ts"],
+        exclude = [
+            "**/*.spec.ts",
+            "main.ts",
+            "test.ts",
+            "initialize_testbed.ts",
+        ],
+    ),
+    assets = glob([
+        "**/*.css",
+        "**/*.html",
+    ]) + ([":styles"] if len(glob(["**/*.scss"])) else []),
+    deps = [
+        "@npm//@angular/core",
+        "@npm//@angular/forms",
+        "@npm//@angular/platform-browser",
+        "@npm//@angular/router",
+        "@npm//@types",
+        "@npm//apollo-angular",
+        "@npm//apollo-angular-link-http",
+        "@npm//apollo-cache-inmemory",
+        "@npm//apollo-link-context",
+        "@npm//graphql-tag",
+        "@npm//rxjs",
+    ],
+)
+
+rollup_bundle(
+    name = "bundle",
+    entry_point = ":main.prod.ts",
+    deps = [
+        "//apps/admin-app/src",
+        "@npm//@angular/router",
+        "@npm//rxjs",
+    ],
+)
+
+web_package(
+    name = "prodapp",
+    assets = [
+        # do not sort
+        "@npm//:node_modules/zone.js/dist/zone.min.js",
+        ":bundle.min.js",
+        ":global_stylesheet",
+    ],
+    data = [
+        "favicon.ico",
+    ],
+    index_html = "index.html",
+)
+
+history_server(
+    name = "prodserver",
+    data = [":prodapp"],
+    templated_args = ["src/prodapp"],
+)
+
+filegroup(
+    name = "rxjs_umd_modules",
+    srcs = [
+        # do not sort
+        "@npm//:node_modules/rxjs/bundles/rxjs.umd.js",
+        ":rxjs_shims.js",
+    ],
+)
+
+ts_devserver(
+    name = "devserver",
+    data = [
+        "favicon.ico",
+    ],
+    entry_module = "intuitive_api/apps/admin-app/src/main.dev",
+    index_html = "index.html",
+    port = 4200,
+    scripts = [
+        "@npm//:node_modules/tslib/tslib.js",
+        ":rxjs_umd_modules",
+    ],
+    serving_path = "/bundle.min.js",
+    static_files = [
+        "@npm//:node_modules/zone.js/dist/zone.min.js",
+        ":global_stylesheet",
+    ],
+    deps = [":src"],
+)

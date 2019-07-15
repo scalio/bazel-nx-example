@@ -1,0 +1,82 @@
+package(default_visibility = ["//visibility:public"])
+
+# TS compile
+load("@npm_bazel_typescript//:index.bzl", "ts_library")
+
+# bazel build //apps/api/src:app
+ts_library(
+    name = "app",
+    srcs = glob(
+        include = ["**/*.ts"],
+        exclude = ["**/*spec.ts"],
+    ),
+    module_name = "@api",
+    node_modules = "@npm//:node_modules",
+    deps = [
+        "@npm//@nestjs",
+        "@npm//@types",
+        "@npm//class-transformer",
+        "@npm//class-validator",
+        "@npm//reflect-metadata",
+        "@npm//rxjs",
+        "@npm//tslib",
+        "@npm//typeorm",
+    ],
+)
+
+load("@build_bazel_rules_nodejs//:defs.bzl", "nodejs_binary")
+
+# bazel run //apps/api/src:server
+nodejs_binary(
+    name = "server",
+    data = [
+        ":app",
+        "//:env_file",
+    ],
+    # entry_point defined as label:
+    # https://github.com/bazelbuild/rules_nodejs/releases/tag/0.31.1
+    entry_point = ":main.ts",
+    node_modules = "@npm//:node_modules",
+)
+
+# Note it will not cross-compile on Mac OS to linux:
+# https://github.com/bazelbuild/rules_nodejs/issues/396
+# https://github.com/bazelbuild/rules_nodejs/pull/827
+load("@io_bazel_rules_docker//nodejs:image.bzl", "nodejs_image")
+load(
+    "@io_bazel_rules_docker//container:container.bzl",
+    "container_image",
+)
+
+nodejs_image(
+    name = "nodejs_image",
+    data = [
+        ":app",
+        "//:env_file",
+    ],
+    entry_point = ":main.ts",
+    # This will be put into its own layer.
+    node_modules = "@npm//:node_modules",
+)
+
+# bazel run //apps/api/src:latest
+container_image(
+    name = "latest",
+    base = ":nodejs_image",
+    repository = "intuitive-api",
+    stamp = True,
+    tags = ["local"],
+)
+
+load("@io_bazel_rules_docker//container:container.bzl", "container_push")
+
+# IMAGE_TAG=${CIRCLE_TAG:-${CIRCLE_BRANCH}-$(echo ${CIRCLE_SHA1} | cut -c -7)}
+# bazel run --define push_tag=${IMAGE_TAG} --define push_repository=${REPOSITORY} //apps/api/src:push_container
+container_push(
+    name = "push_container",
+    format = "Docker",
+    image = ":nodejs_image",
+    registry = "gcr.io",
+    repository = "$(push_repository)",
+    tag = "$(push_tag)",
+)

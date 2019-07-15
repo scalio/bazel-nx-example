@@ -7,7 +7,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 import { routing } from './app.routing';
 import { AlertComponent } from './components';
-import { GraphQLModule } from './graphql.module';
 import { LoginComponent } from './login';
 
 @NgModule({
@@ -22,7 +21,6 @@ import { LoginComponent } from './login';
     // AppRoutingModule,
     HttpClientModule,
     routing,
-    GraphQLModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
