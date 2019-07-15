@@ -45,11 +45,6 @@ ng_module(
         "@npm//@angular/platform-browser",
         "@npm//@angular/router",
         "@npm//@types",
-        "@npm//apollo-angular",
-        "@npm//apollo-angular-link-http",
-        "@npm//apollo-cache-inmemory",
-        "@npm//apollo-link-context",
-        "@npm//graphql-tag",
         "@npm//rxjs",
     ],
 )
@@ -98,7 +93,7 @@ ts_devserver(
     data = [
         "favicon.ico",
     ],
-    entry_module = "intuitive_api/apps/admin-app/src/main.dev",
+    entry_module = "intuitive_api/apps/lazy-loading-app/src/main.dev",
     index_html = "index.html",
     port = 4200,
     scripts = [

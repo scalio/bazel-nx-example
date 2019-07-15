@@ -7,7 +7,9 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 import { routing } from './app.routing';
 import { AlertComponent } from './components';
+import { HomeModule } from './home/home.module';
 import { LoginComponent } from './login';
+import { RegisterModule } from './register/register.module';
 
 @NgModule({
   declarations: [
@@ -20,6 +22,8 @@ import { LoginComponent } from './login';
     BrowserModule,
     // AppRoutingModule,
     HttpClientModule,
+    HomeModule,
+    RegisterModule,
     routing,
   ],
   providers: [],
