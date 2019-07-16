@@ -15,6 +15,7 @@ ts_library(
     deps = [
         "@npm//@nestjs",
         "@npm//@types",
+        "@npm//argon2",
         "@npm//class-transformer",
         "@npm//class-validator",
         "@npm//reflect-metadata",
@@ -63,7 +64,7 @@ nodejs_image(
 container_image(
     name = "latest",
     base = ":nodejs_image",
-    repository = "intuitive-api",
+    repository = "nx_bazel_example",
     stamp = True,
     tags = ["local"],
 )

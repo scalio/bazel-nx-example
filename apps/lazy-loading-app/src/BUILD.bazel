@@ -93,7 +93,7 @@ ts_devserver(
     data = [
         "favicon.ico",
     ],
-    entry_module = "intuitive_api/apps/lazy-loading-app/src/main.dev",
+    entry_module = "nx_bazel_example/apps/lazy-loading-app/src/main.dev",
     index_html = "index.html",
     port = 4200,
     scripts = [

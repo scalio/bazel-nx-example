@@ -5,8 +5,7 @@ import { AppModule } from './app/app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  app.setGlobalPrefix(`api`);
-  const port = process.env.port || 3333;
+  const port = process.env.port || 3000;
 
   const options = new DocumentBuilder()
     .setTitle('Lazy loading app')
@@ -15,11 +14,16 @@ async function bootstrap() {
     .addTag('api')
     .build();
   const document = SwaggerModule.createDocument(app, options);
-  SwaggerModule.setup('swagger', app, document);
+  SwaggerModule.setup('api', app, document);
 
+  console.log('qweqwe');
   await app.listen(port, () => {
     console.log(`Listening at http://localhost:${port}`);
   });
 }
 
-bootstrap();
+bootstrap().catch((err) => {
+  process.exitCode = 1;
+  // tslint:disable-next-line:no-console
+  console.error(err);
+});

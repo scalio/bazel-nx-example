@@ -98,32 +98,28 @@
       "schematics": {},
       "architect": {
         "build": {
-          "builder": "@nrwl/node:build",
+          "builder": "@angular/bazel:build",
           "options": {
-            "outputPath": "dist/apps/api",
-            "main": "apps/api/src/main.ts",
-            "tsConfig": "apps/api/tsconfig.app.json",
-            "assets": ["apps/api/src/assets"]
+            "targetLabel": "//apps/api/src:server",
+            "bazelCommand": "build"
           },
           "configurations": {
             "production": {
-              "optimization": true,
-              "extractLicenses": true,
-              "inspect": false,
-              "fileReplacements": [
-                {
-                  "replace": "apps/api/src/environments/environment.ts",
-                  "with": "apps/api/src/environments/environment.prod.ts"
-                }
-              ],
-              "externalDependencies": "none"
+              "targetLabel": "//apps/api/src:server"
             }
           }
         },
         "serve": {
-          "builder": "@nrwl/node:execute",
+          "builder": "@angular/bazel:build",
           "options": {
-            "buildTarget": "api:build"
+            "targetLabel": "//apps/api/src:server",
+            "bazelCommand": "run",
+            "watch": true
+          },
+          "configurations": {
+            "production": {
+              "targetLabel": "//apps/api/src:server"
+            }
           }
         },
         "lint": {

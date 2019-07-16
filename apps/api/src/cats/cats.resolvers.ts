@@ -1,3 +1,4 @@
+/*
 import { Logger, ParseIntPipe, UseGuards } from '@nestjs/common';
 import { Args, Mutation, Query, Resolver, Subscription } from '@nestjs/graphql';
 import { PubSub } from 'graphql-subscriptions';
@@ -44,3 +45,4 @@ export class CatsResolvers {
     return pubSub.asyncIterator('catCreated');
   }
 }
+*/
