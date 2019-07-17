@@ -3,7 +3,9 @@ import { NgModule, NgModuleFactoryLoader } from '@angular/core';
 import { AppComponent } from './app.component';
 import { AppModule } from './app.module';
 import { routes } from './app.routing';
+// @ts-ignore
 import { HomeModuleNgFactory } from './home/home.module.ngfactory';
+// @ts-ignore
 import { RegisterModuleNgFactory } from './register/register.module.ngfactory';
 
 const routeModule = {

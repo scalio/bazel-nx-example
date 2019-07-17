@@ -17,8 +17,8 @@ async function bootstrap() {
   const options = new DocumentBuilder()
     .setTitle('nx-bazel-starter')
     .setDescription('The Nx Full-Stack app API description')
-    .setVersion('1.0')
-    .addTag('api')
+    .addBearerAuth()
+    .setSchemes('http', 'https')
     .build();
   const document = SwaggerModule.createDocument(app, options);
   SwaggerModule.setup('api', app, document);
@@ -31,6 +31,5 @@ async function bootstrap() {
 
 bootstrap().catch((err) => {
   process.exitCode = 1;
-  // tslint:disable-next-line:no-console
-  console.error(err);
+  Logger.error(err);
 });

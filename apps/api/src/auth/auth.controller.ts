@@ -6,7 +6,6 @@ import { AuthService } from './auth.service';
 
 @Controller('/auth')
 export class AuthController {
-  private logger = new Logger(AuthController.name);
 
   constructor(
     private readonly authService: AuthService,
@@ -16,7 +15,6 @@ export class AuthController {
   @Post('login')
   @HttpCode(200)
   async loginUser(@Response() res: any, @Body() body: LoginUserDto) {
-    this.logger.log('loginUser called');
     if (!(body && body.username && body.password)) {
       return res.status(HttpStatus.FORBIDDEN).json({ message: 'Username and password are required!' });
     }
@@ -34,7 +32,6 @@ export class AuthController {
 
   @Post('register')
   async registerUser(@Response() res: any, @Body() body: User) {
-    this.logger.log('register called');
     if (!(body && body.username && body.password)) {
       return res.status(HttpStatus.FORBIDDEN).json({ message: 'Username and password are required!' });
     }
@@ -43,7 +40,7 @@ export class AuthController {
     try {
       user = await this.userService.getUserByUsername(body.username);
     } catch (err) {
-      this.logger.log('Error in lookup user');
+      Logger.log('Error in lookup user', 'AuthController');
     }
 
     if (user) {
