@@ -13,6 +13,7 @@ ts_library(
     module_name = "@api",
     node_modules = "@npm//:node_modules",
     deps = [
+        "//libs/api-interface/src:api-interface",
         "@npm//@nestjs",
         "@npm//@types",
         "@npm//argon2",

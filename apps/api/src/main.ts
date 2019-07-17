@@ -1,3 +1,4 @@
+import { Logger } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
@@ -8,17 +9,17 @@ async function bootstrap() {
   const port = process.env.port || 3000;
 
   const options = new DocumentBuilder()
-    .setTitle('Lazy loading app')
-    .setDescription('The Lazy loading API description')
+    .setTitle('nx-bazel-starter')
+    .setDescription('The Nx Full-Stack app API description')
     .setVersion('1.0')
     .addTag('api')
     .build();
   const document = SwaggerModule.createDocument(app, options);
   SwaggerModule.setup('api', app, document);
 
-  console.log('qweqwe');
   await app.listen(port, () => {
-    console.log(`Listening at http://localhost:${port}`);
+    Logger.log(`App listening at http://localhost:${port}`, 'HTTP');
+    Logger.log('Press Ctrl+C to quit.', 'HTTP');
   });
 }
 
