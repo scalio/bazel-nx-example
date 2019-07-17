@@ -9,7 +9,7 @@ import { User } from '../models';
 export class AuthenticationService {
     private currentUserSubject: BehaviorSubject<User>;
     public currentUser: Observable<User>;
-    private apiUrl = '/api';
+    private apiUrl = 'http://localhost:3000';
 
     constructor(private http: HttpClient) {
         this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
