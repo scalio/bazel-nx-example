@@ -1,7 +1,12 @@
-# Nx Bazel Starter
+# Nx Monorepo Bazel Starter
 This repo contains the demo full-stack app made with [Nx](https://nx.dev), [Angular](https://angular.io/)
 and [Nest.js](https://nestjs.com/) frameworks.
-The application is built using [Bazel](https://bazel.build/).
+The application is built **using [Bazel](https://bazel.build/)**.
+
+## Overview
+This project was created to demonstrate a fully fledged
+full-stack application built with Bazel.
+It showcases basic CRUD operations, authentication, routing and more.
 
 The full list of cool technologies used in this project:
 - **Lazy loading** of each module at the **Angular** app.
@@ -13,12 +18,41 @@ interfaces to be shared between frontend and backend.
   - To access protected routes you should use the HTTP Header: `Authentication: 'Bearer <token>'`
 - **TypeORM + Postgres** for persisting data.
 - **Docker-compose** used to run database, frontend and the backend.
+- **Bazel** build tool for faster builds
 
 ## Build & Run
+The easiest way to run the API, DB and frontend all together is docker-compose:
+```bash
+docker-compose up --build
+```
 
-Run `docker-compose up --build` to build and run the project.
-The app should be available at `http://localhost:4200/`
+Without docker, things are a little more complicated:
+```bash
+# installation
+yarn
 
-Run `yarn start` to run only frontend.
+# run frontend
+yarn start
 
-Run `yarn start api` to run only backend (assuming DB is already running).
+# run backend
+# assuming DB is already running
+yarn start api
+```
+
+After the build the app should be available at `http://localhost:4200/`
+and API docs are at `http://localhost:3000/api`.
+
+## Credits
+
+Created by [@rayman1104](https://github.com/rayman1104/) @ [Scalio](https://scal.io/)
+
+<!-- markdownlint-disable -->
+<p align="center">
+    <br/>
+    <br/>
+    <br/>
+    <a href="https://scal.io/">
+        <img src="https://raw.githubusercontent.com/scalio/bazel-nestjs-starter/master/readme-assets/scalio.png"/>
+    </a>
+</p>
+<!-- markdownlint-restore -->
