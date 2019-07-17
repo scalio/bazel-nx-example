@@ -1,13 +1,18 @@
-FROM node:12.2-alpine
-RUN apk --no-cache add --virtual builds-deps build-base python
+FROM node:12.2
+ENV NODE_ENV development
 
-WORKDIR /usr/src/app
-COPY package.json yarn.lock ./
-RUN yarn install
+# Set app directory
+WORKDIR /app
 
-COPY tsconfig.json angular.json ormconfig.json ./
-COPY ./apps ./apps
-COPY ./libs ./libs
+# Install app dependencies
+COPY package.json yarn.lock angular-metadata.tsconfig.json ./
+RUN yarn install --frozen-lockfile --dev
+
+COPY tsconfig.json angular.json WORKSPACE BUILD.bazel .bazelrc .bazelignore ./
+
+# No src files are added to container here.
+# Dockerfile.dev is to be used with volume mounting from host via docker-compose or:
+# docker run -v ./apps:/app/apps:ro -v ./libs:/app/libs:ro
 
 EXPOSE 4200
-CMD yarn build --prod && yarn start:prod --host 0.0.0.0
+CMD yarn start

@@ -16,8 +16,9 @@ interfaces to be shared between frontend and backend.
 
 ## Build & Run
 
-Run `docker-compose up --build` to build and run the project. The app should be available at `http://localhost:4200/`
+Run `docker-compose up --build` to build and run the project.
+The app should be available at `http://localhost:4200/`
 
 Run `yarn start` to run only frontend.
 
-Run `yarn start api` to run only backend (assuming DB is already started).
+Run `yarn start api` to run only backend (assuming DB is already running).
