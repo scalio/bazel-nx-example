@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { SignedUser } from '@lazy/api-interface';
 
-import { User } from './models';
 import { AuthenticationService } from './services';
 
 @Component({ selector: 'lazy-root', templateUrl: 'app.component.html' })
 export class AppComponent {
-  currentUser: User;
+  currentUser: SignedUser;
 
   constructor(
     private router: Router,

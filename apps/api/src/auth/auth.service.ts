@@ -1,3 +1,4 @@
+import { SignedUser } from '@lazy/api-interface';
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { UserService } from '../user/user.service';
@@ -5,14 +6,14 @@ import { JwtPayload } from './interfaces/jwt-payload.interface';
 
 @Injectable()
 export class AuthService {
-  expiresIn = 3600;
+  expiresIn = 360000;
 
   constructor(
     private userService: UserService,
     private readonly jwtService: JwtService,
   ) {}
 
-  async createToken(username: string) {
+  async createToken(username: string): Promise<SignedUser> {
     const { firstName, lastName } = await this.userService.getUserByUsername(username);
     const payload: JwtPayload = { username, firstName, lastName };
 

@@ -17,3 +17,11 @@ export interface ISignInDto {
   username: string;
   password: string;
 }
+
+export interface SignedUser {
+  username: string;
+  firstName: string;
+  lastName: string;
+  expiresIn: number;
+  token: string;
+}

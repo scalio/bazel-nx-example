@@ -1,36 +1,84 @@
 ﻿import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Observable, of, Subscription } from 'rxjs';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { CatModel, ICreateCatDto, SignedUser } from '@lazy/api-interface';
+import { Subscription } from 'rxjs';
+import { first } from 'rxjs/operators';
 
-import { User } from '../models';
-import { AuthenticationService } from '../services';
+import { AlertService, AuthenticationService } from '../services';
+import { CatsService } from '../services/cats.service';
 
 @Component({ templateUrl: 'home.component.html' })
 export class HomeComponent implements OnInit, OnDestroy {
-    currentUser: User;
-    currentUserSubscription: Subscription;
-    cats: Observable<any>;
+  currentUser: SignedUser;
+  currentUserSubscription: Subscription;
+  cats: CatModel[] = [];
+
+  catForm: FormGroup;
+  loading = false;
+  submitted = false;
 
   constructor(
-        private authenticationService: AuthenticationService,
-    ) {
-        this.currentUserSubscription = this.authenticationService.currentUser.subscribe((user) => {
-            this.currentUser = user;
+    private authenticationService: AuthenticationService,
+    private catsService: CatsService,
+    private fb: FormBuilder,
+    private alertService: AlertService,
+  ) {
+    this.currentUserSubscription = this.authenticationService.currentUser.subscribe((user) => {
+      this.currentUser = user;
+    });
+  }
+
+  ngOnInit() {
+    this.loadAllCats();
+    this.catForm = this.fb.group({
+      name: ['', Validators.required],
+      age: ['', Validators.required],
+    });
+  }
+
+  ngOnDestroy() {
+    this.currentUserSubscription.unsubscribe();
+  }
+
+  // convenience getter for easy access to form fields
+  get f(): { [p: string]: AbstractControl } { return this.catForm.controls; }
+
+  onSubmit() {
+    this.submitted = true;
+
+    // stop here if form is invalid
+    if (this.catForm.invalid) {
+      return;
+    }
+
+    this.loading = true;
+    const createCatDto: ICreateCatDto = {
+      name: this.f.name.value,
+      age: this.f.age.value,
+    };
+    this.catsService.create(createCatDto)
+      .pipe(first())
+      .subscribe(
+        () => {
+          this.loadAllCats();
+          this.loading = false;
+          this.submitted = false;
+        },
+        ({ error: { message } }) => {
+          this.alertService.error(message);
+          this.loading = false;
         });
-    }
+  }
 
-    ngOnInit() {
+  deleteCat(id: number) {
+    this.catsService.delete(id).pipe(first()).subscribe(() => {
       this.loadAllCats();
-    }
+    });
+  }
 
-    ngOnDestroy() {
-        this.currentUserSubscription.unsubscribe();
-    }
-
-    private loadAllCats() {
-      this.cats = of([{
-        id: 1,
-        name: 'qeq',
-        age: 10,
-      }]);
-    }
+  private loadAllCats() {
+    this.catsService.getAll().pipe(first()).subscribe((cats) => {
+      this.cats = cats;
+    });
+  }
 }
