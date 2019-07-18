@@ -6,7 +6,7 @@ import { JwtPayload } from './interfaces/jwt-payload.interface';
 
 @Injectable()
 export class AuthService {
-  expiresIn = 360000;
+  expiresIn = 3600;
 
   constructor(
     private userService: UserService,
