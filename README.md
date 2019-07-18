@@ -8,10 +8,14 @@ This project was created to demonstrate a fully fledged
 full-stack application built with Bazel.
 It showcases basic CRUD operations, authentication, routing, code-sharing between frontend and backend and more.
 
+Frontend application was built according to [Angular 8 JWT Authentication Example](https://github.com/cornflourblue/angular-8-jwt-authentication-example).
+
 The full list of cool technologies used in this project:
-- **Lazy loading** of each module at the **Angular** app.
+- **Lazy loading** of each module in the **Angular** app.
 - **Monorepo** architecture using **Nx** that allows TypeScript
 interfaces to be shared between frontend and backend.
+  - [libs/api-interface](libs/api-interface/src/interfaces):
+  here you can find the shared interfaces.
 - **Swagger** module for documentation.
   - After the build you can see the documentation for REST API at `http://localhost:3000/api`.
 - **Passport** for login using **JWT**.
