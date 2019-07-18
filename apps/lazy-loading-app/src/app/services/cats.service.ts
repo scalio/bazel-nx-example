@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { CatModel, ICreateCatDto } from '@lazy/api-interface';
+import { CatModel, ICreateCatDto } from '@app/api-interface';
 import { Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })

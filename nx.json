@@ -1,5 +1,5 @@
 {
-  "npmScope": "lazy",
+  "npmScope": "app",
   "implicitDependencies": {
     "angular.json": "*",
     "package.json": "*",
@@ -9,9 +9,6 @@
   },
   "projects": {
     "lazy-loading-app": {
-      "tags": []
-    },
-    "lazy-loading-app-e2e": {
       "tags": []
     },
     "api": {

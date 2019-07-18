@@ -1,5 +1,5 @@
 {
-  "name": "lazy-loading-app",
+  "name": "nx-bazel-example",
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
@@ -10,7 +10,6 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "./node_modules/.bin/nx lint && ng lint",
-    "e2e": "ng e2e",
     "affected:apps": "./node_modules/.bin/nx affected:apps",
     "affected:libs": "./node_modules/.bin/nx affected:libs",
     "affected:build": "./node_modules/.bin/nx affected:build",

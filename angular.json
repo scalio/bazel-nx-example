@@ -64,32 +64,6 @@
         }
       }
     },
-    "lazy-loading-app-e2e": {
-      "root": "apps/lazy-loading-app-e2e",
-      "projectType": "application",
-      "prefix": "",
-      "architect": {
-        "e2e": {
-          "builder": "@angular/bazel:build",
-          "options": {
-            "bazelCommand": "test",
-            "targetLabel": "//apps/lazy-loading-app-e2e/src:devserver_test"
-          },
-          "configurations": {
-            "production": {
-              "targetLabel": "//apps/lazy-loading-app-e2e/src:prodserver_test"
-            }
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": "apps/lazy-loading-app-e2e/tsconfig.e2e.json",
-            "exclude": ["**/node_modules/**"]
-          }
-        }
-      }
-    },
     "api": {
       "root": "apps/api",
       "sourceRoot": "apps/api/src",

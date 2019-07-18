@@ -1,4 +1,4 @@
-import { SignedUser } from '@lazy/api-interface';
+import { SignedUser } from '@app/api-interface';
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { UserService } from '../user/user.service';

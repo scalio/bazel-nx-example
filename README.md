@@ -5,7 +5,7 @@ The application is built **using [Bazel](https://bazel.build/)**.
 
 ## Overview
 This project was created to demonstrate a fully fledged
-full-stack application built with Bazel.
+full-stack typescript application built with Bazel.
 It showcases basic CRUD operations, authentication, routing, code-sharing between frontend and backend and more.
 
 Frontend application was built according to [Angular 8 JWT Authentication Example](https://github.com/cornflourblue/angular-8-jwt-authentication-example).

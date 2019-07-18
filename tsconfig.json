@@ -22,7 +22,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@lazy/api-interface": [
+      "@app/api-interface": [
         "libs/api-interface/src/index.ts"
       ]
     }

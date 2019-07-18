@@ -4,7 +4,7 @@ load("@npm_angular_bazel//:index.bzl", "ng_module")
 load("@build_bazel_rules_nodejs//:defs.bzl", "history_server", "rollup_bundle")
 load("@build_bazel_rules_nodejs//:defs.bzl", "history_server", "rollup_bundle")
 load("@build_bazel_rules_nodejs//internal/web_package:web_package.bzl", "web_package")
-load("@npm_bazel_typescript//:index.bzl", "ts_devserver", "ts_library")
+load("@npm_bazel_typescript//:index.bzl", "ts_devserver")
 load("@io_bazel_rules_sass//:defs.bzl", "multi_sass_binary", "sass_binary")
 
 sass_binary(

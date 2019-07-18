@@ -1,4 +1,4 @@
-import { CatModel } from '@lazy/api-interface';
+import { CatModel } from '@app/api-interface';
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()

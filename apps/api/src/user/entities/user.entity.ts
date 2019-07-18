@@ -1,4 +1,4 @@
-import { UserModel } from '@lazy/api-interface';
+import { UserModel } from '@app/api-interface';
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()

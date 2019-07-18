@@ -1,4 +1,4 @@
-import { ICreateCatDto } from '@lazy/api-interface';
+import { ICreateCatDto } from '@app/api-interface';
 import { ApiModelProperty } from '@nestjs/swagger';
 import { IsInt, IsNotEmpty, Max, Min } from 'class-validator';
 

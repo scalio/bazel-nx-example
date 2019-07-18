@@ -9,6 +9,6 @@ ts_library(
         include = ["**/*.ts"],
         exclude = ["**/*spec.ts"],
     ),
-    module_name = "@lazy/api-interface",
+    module_name = "@app/api-interface",
     node_modules = "@npm//:node_modules",
 )
