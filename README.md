@@ -1,5 +1,5 @@
 # Nx Monorepo Bazel Starter
-This repo contains the demo full-stack app made with [Nx](https://nx.dev), [Angular](https://angular.io/)
+This repo contains a demo full-stack app made with [Nx](https://nx.dev), [Angular](https://angular.io/)
 and [Nest.js](https://nestjs.com/) frameworks.
 The application is built **using [Bazel](https://bazel.build/)**.
 
