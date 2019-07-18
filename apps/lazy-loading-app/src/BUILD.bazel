@@ -40,6 +40,7 @@ ng_module(
         "**/*.html",
     ]) + ([":styles"] if len(glob(["**/*.scss"])) else []),
     deps = [
+        "//libs/api-interface/src:api-interface",
         "@npm//@angular/core",
         "@npm//@angular/forms",
         "@npm//@angular/platform-browser",

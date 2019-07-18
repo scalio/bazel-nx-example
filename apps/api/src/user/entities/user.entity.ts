@@ -1,27 +1,24 @@
-import { ApiModelProperty } from '@nestjs/swagger';
+import { UserModel } from '@lazy/api-interface';
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
-export class User {
+export class User implements UserModel {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ApiModelProperty()
   @Column({ length: 500 })
   username: string;
 
-  @ApiModelProperty()
   @Column({ length: 500, nullable: true })
   firstName: string;
 
-  @ApiModelProperty()
   @Column({ length: 500, nullable: true })
   lastName: string;
 
-  @ApiModelProperty()
-  @Column({ length: 500, nullable: true })
-  password: string | undefined;
-
   @Column({ length: 500 })
-  passwordHash: string | undefined;
+  password: string;
+
+  constructor(partialUser: Partial<User>) {
+    Object.assign(this, partialUser);
+  }
 }

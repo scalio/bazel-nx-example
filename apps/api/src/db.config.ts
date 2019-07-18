@@ -2,7 +2,7 @@ import * as dotenv from 'dotenv';
 import { join } from 'path';
 import { ConnectionOptions } from 'typeorm';
 import { Cat } from './cats/entities/cat';
-import { User } from './user/user.entity';
+import { User } from './user/entities/user.entity';
 
 dotenv.config();
 

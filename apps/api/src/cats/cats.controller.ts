@@ -26,7 +26,9 @@ export class CatsController {
 
   @Post()
   @ApiOperation({ title: 'Add cat' })
-  async create(@Body() dto: CreateCatDto) {}
+  async create(@Body() createCatDto: CreateCatDto) {
+    return this.catsService.create(createCatDto);
+  }
 
   @Get()
   @ApiOperation({ title: 'Get all cats' })

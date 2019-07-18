@@ -1,6 +1,6 @@
 import { Body, Controller, HttpCode, HttpStatus, Logger, Post, Response } from '@nestjs/common';
-import { LoginUserDto } from '../user/login-user.dto';
-import { User } from '../user/user.entity';
+import { SignInDto } from '../user/dto/sign-in.dto';
+import { SignUpDto } from '../user/dto/sign-up.dto';
 import { UserService } from '../user/user.service';
 import { AuthService } from './auth.service';
 
@@ -12,43 +12,55 @@ export class AuthController {
     private readonly userService: UserService,
   ) {}
 
-  @Post('login')
+  @Post('sign-in')
   @HttpCode(200)
-  async loginUser(@Response() res: any, @Body() body: LoginUserDto) {
-    if (!(body && body.username && body.password)) {
-      return res.status(HttpStatus.FORBIDDEN).json({ message: 'Username and password are required!' });
+  async loginUser(@Response() res: any, @Body() signInDto: SignInDto) {
+    if (!(signInDto && signInDto.username && signInDto.password)) {
+      return res
+        .status(HttpStatus.FORBIDDEN)
+        .json({ message: 'Username and password are required!' });
     }
 
-    const user = await this.userService.getUserByUsername(body.username);
+    const user = await this.userService.getUserByUsername(signInDto.username);
 
     if (user) {
-      if (await this.userService.compareHash(body.password, user.passwordHash)) {
-        return res.status(HttpStatus.OK).json(await this.authService.createToken(user.username));
+      if (await UserService.compareHash(signInDto.password, user.password)) {
+        return res
+          .status(HttpStatus.OK)
+          .json(await this.authService.createToken(user.username));
       }
     }
 
-    return res.status(HttpStatus.FORBIDDEN).json({ message: 'Username or password wrong!' });
+    return res
+      .status(HttpStatus.FORBIDDEN)
+      .json({ message: 'Username or password wrong!' });
   }
 
-  @Post('register')
-  async registerUser(@Response() res: any, @Body() body: User) {
-    if (!(body && body.username && body.password)) {
-      return res.status(HttpStatus.FORBIDDEN).json({ message: 'Username and password are required!' });
+  @Post('sign-up')
+  async registerUser(@Response() res: any, @Body() signUpDto: SignUpDto) {
+    if (!(signUpDto && signUpDto.username && signUpDto.password)) {
+      return res
+        .status(HttpStatus.FORBIDDEN)
+        .json({ message: 'Username and password are required!' });
     }
 
     let user;
     try {
-      user = await this.userService.getUserByUsername(body.username);
+      user = await this.userService.getUserByUsername(signUpDto.username);
     } catch (err) {
       Logger.log('Error in lookup user', 'AuthController');
     }
 
     if (user) {
-      return res.status(HttpStatus.FORBIDDEN).json({ message: 'Username already exists!'});
+      return res
+        .status(HttpStatus.FORBIDDEN)
+        .json({ message: 'Username already exists!'});
     } else {
-      user = await this.userService.createUser(body);
+      user = await this.userService.createUser(signUpDto);
     }
 
-    return res.status(HttpStatus.OK).json(await this.authService.createToken(user.username));
+    return res
+      .status(HttpStatus.OK)
+      .json(await this.authService.createToken(user.username));
   }
 }

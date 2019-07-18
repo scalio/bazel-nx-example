@@ -6,7 +6,7 @@ The application is built **using [Bazel](https://bazel.build/)**.
 ## Overview
 This project was created to demonstrate a fully fledged
 full-stack application built with Bazel.
-It showcases basic CRUD operations, authentication, routing and more.
+It showcases basic CRUD operations, authentication, routing, code-sharing between frontend and backend and more.
 
 The full list of cool technologies used in this project:
 - **Lazy loading** of each module at the **Angular** app.
@@ -29,7 +29,7 @@ docker-compose up --build
 Without docker, things are a little more complicated:
 ```bash
 # installation
-yarn
+yarn install -D
 
 # run frontend
 yarn start
