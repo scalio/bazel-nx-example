@@ -1,4 +1,4 @@
-import { ISignInDto } from '@app/api-interface';
+import { ISignInDto } from '@api-interface';
 import { ApiModelProperty } from '@nestjs/swagger';
 import { IsNotEmpty, IsString } from 'class-validator';
 

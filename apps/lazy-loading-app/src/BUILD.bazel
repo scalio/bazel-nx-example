@@ -109,15 +109,6 @@ ts_devserver(
 
 rollup_bundle(
     name = "bundle",
-    # These Angular routes may be lazy-loaded at runtime.
-    # So we tell Rollup that it can put them in separate JS chunks
-    # (code-splitting) for faster application startup.
-    # In the future, we could automatically gather these from statically
-    # analyzing the Angular sources.
-    #    additional_entry_points = [
-    #        "src/app/home/home.module.ngfactory",
-    #        "src/app/register/register.module.ngfactory",
-    #    ],
     entry_point = ":main.prod.ts",
     deps = [
         ":src",

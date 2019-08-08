@@ -1,4 +1,4 @@
-import { Message } from '@app/api-interface';
+import { Message } from '@api-interface';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()

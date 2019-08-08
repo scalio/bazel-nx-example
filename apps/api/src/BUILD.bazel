@@ -1,66 +1,58 @@
+load("@npm_bazel_typescript//:index.bzl", "ts_library")
+load("@build_bazel_rules_nodejs//:defs.bzl", "nodejs_binary")
+load("@io_bazel_rules_docker//nodejs:image.bzl", "nodejs_image")
+load("@io_bazel_rules_docker//container:container.bzl", "container_image", "container_push")
+
 package(default_visibility = ["//visibility:public"])
 
-# TS compile
-load("@npm_bazel_typescript//:index.bzl", "ts_library")
-
-# bazel build //apps/api/src:app
 ts_library(
-    name = "app",
+    name = "src",
     srcs = glob(
-        include = ["**/*.ts"],
-        exclude = ["**/*spec.ts"],
+        include = ["*.ts"],
+        exclude = ["*.spec.ts"],
     ),
     module_name = "@api",
-    node_modules = "@npm//:node_modules",
     deps = [
-        "//libs/api-interface/src:api-interface",
+        "//apps/api/src/app",
+        "//apps/api/src/auth",
+        "//apps/api/src/cats",
+        "//apps/api/src/user",
         "@npm//@nestjs",
+        "@npm//@nestjs/common",
+        "@npm//@nestjs/core",
+        "@npm//@nestjs/platform-express",
+        "@npm//@nestjs/swagger",
         "@npm//@types",
-        "@npm//argon2",
-        "@npm//class-transformer",
-        "@npm//class-validator",
-        "@npm//reflect-metadata",
-        "@npm//rxjs",
-        "@npm//tslib",
-        "@npm//typeorm",
+        "@npm//cors",
+        "@npm//helmet",
     ],
 )
 
-load("@build_bazel_rules_nodejs//:defs.bzl", "nodejs_binary")
+RUNTIME_DEPS = [
+    ":src",
+    "@npm//passport-jwt",
+    "@npm//pg",
+    "@npm//swagger-ui-express",
+]
 
-# bazel run //apps/api/src:server
 nodejs_binary(
     name = "server",
-    data = [
-        ":app",
-        "//:env_file",
-    ],
-    # entry_point defined as label:
-    # https://github.com/bazelbuild/rules_nodejs/releases/tag/0.31.1
+    data = RUNTIME_DEPS + ["//:env_file"],
     entry_point = ":main.ts",
+)
+
+nodejs_image(
+    name = "nodejs_image",
+    data = RUNTIME_DEPS,
+    entry_point = ":main.ts",
+    # This will be put into its own layer.
     node_modules = "@npm//:node_modules",
 )
 
 # Note it will not cross-compile on Mac OS to linux:
 # https://github.com/bazelbuild/rules_nodejs/issues/396
 # https://github.com/bazelbuild/rules_nodejs/pull/827
-load("@io_bazel_rules_docker//nodejs:image.bzl", "nodejs_image")
-load(
-    "@io_bazel_rules_docker//container:container.bzl",
-    "container_image",
-)
-
-nodejs_image(
-    name = "nodejs_image",
-    data = [
-        ":app",
-        "//:env_file",
-    ],
-    entry_point = ":main.ts",
-    # This will be put into its own layer.
-    node_modules = "@npm//:node_modules",
-)
-
+#
 # bazel run //apps/api/src:latest
 container_image(
     name = "latest",
@@ -69,8 +61,6 @@ container_image(
     stamp = True,
     tags = ["local"],
 )
-
-load("@io_bazel_rules_docker//container:container.bzl", "container_push")
 
 # IMAGE_TAG=${CIRCLE_TAG:-${CIRCLE_BRANCH}-$(echo ${CIRCLE_SHA1} | cut -c -7)}
 # bazel run --define push_tag=${IMAGE_TAG} --define push_repository=${REPOSITORY} //apps/api/src:push_container
