@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { SignedUser } from '@app/api-interface';
 
-import { AuthenticationService } from './services';
+import { AuthenticationService } from './auth/authentication.service';
 
 @Component({ selector: 'lazy-root', templateUrl: 'app.component.html' })
 export class AppComponent {

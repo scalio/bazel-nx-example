@@ -4,8 +4,9 @@ import { CatModel, ICreateCatDto, SignedUser } from '@app/api-interface';
 import { Subscription } from 'rxjs';
 import { first } from 'rxjs/operators';
 
-import { AlertService, AuthenticationService } from '../services';
-import { CatsService } from '../services/cats.service';
+import { AlertService } from '../alert/alert.service';
+import { AuthenticationService } from '../auth/authentication.service';
+import { CatsService } from './cats.service';
 
 @Component({ templateUrl: 'home.component.html' })
 export class HomeComponent implements OnInit, OnDestroy {

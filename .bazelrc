@@ -18,39 +18,20 @@ build --strategy=AngularTemplateCompile=worker
 # your project directory, which you must exclude from version control and your
 # editor's search path.
 build --symlink_prefix=dist/
-# To disable the symlinks altogether (including bazel-out) you can use
-# build --symlink_prefix=/
-# however this makes it harder to find outputs.
 
-# https://github.com/bazelbuild/bazel/issues/7899
-# Note that container_push targets will fail without it
-# common --host_force_python=PY2
-build --host_force_python=PY2
-
-# Specifies desired output mode for running tests.
-# Valid values are
-#   'summary' to output only test status summary
-#   'errors' to also print test logs for failed tests
-#   'all' to print logs for all tests
-#   'streamed' to output logs for all tests in real time
-#     (this will force tests to be executed locally one at a time regardless of --test_strategy value).
 test --test_output=errors
 
-# Support for debugging NodeJS tests
-# Add the Bazel option `--config=debug` to enable this
-test:debug --test_arg=--node_options=--inspect-brk --test_output=streamed --test_strategy=exclusive --test_timeout=9999 --nocache_test_results
+# Use the Angular 6 compiler
+build --define=compile=legacy
 
 # Turn off legacy external runfiles
 # This prevents accidentally depending on this feature, which Bazel will remove.
 run --nolegacy_external_runfiles
 test --nolegacy_external_runfiles
 
-# Turn on the "Managed Directories" feature.
-# This allows Bazel to share the same node_modules directory with other tools
-# NB: this option was introduced in Bazel 0.26
-# See https://docs.bazel.build/versions/master/command-line-reference.html#flag--experimental_allow_incremental_repository_updates
-# https://github.com/bazelbuild/rules_nodejs/wiki#migrating-to-rules_nodejs-030
-common --experimental_allow_incremental_repository_updates
+# Support for debugging NodeJS tests
+# Add the Bazel option `--config=debug` to enable this
+test:debug --test_arg=--node_options=--inspect-brk --test_output=streamed --test_strategy=exclusive --test_timeout=9999 --nocache_test_results
 
 # Turn on --incompatible_strict_action_env which was on by default
 # in Bazel 0.21.0 but turned off again in 0.22.0. Follow
@@ -62,12 +43,17 @@ build --incompatible_strict_action_env
 run --incompatible_strict_action_env
 test --incompatible_strict_action_env
 
+# Turn on the "Managed Directories" feature.
+# This allows Bazel to share the same node_modules directory with other tools
+# NB: this option was introduced in Bazel 0.26
+# See https://docs.bazel.build/versions/master/command-line-reference.html#flag--experimental_allow_incremental_repository_updates
+# https://github.com/bazelbuild/rules_nodejs/wiki#migrating-to-rules_nodejs-030
+build --experimental_allow_incremental_repository_updates
+query --experimental_allow_incremental_repository_updates
+
 build --incompatible_bzl_disallow_load_after_statement=false
 
 test --test_output=errors
-
-# Use the Angular 6 compiler
-build --define=compile=legacy
 
 # Load any settings specific to the current user.
 # .bazelrc.user should appear in .gitignore so that settings are not shared with team members

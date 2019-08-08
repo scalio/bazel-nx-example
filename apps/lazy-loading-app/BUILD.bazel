@@ -1,0 +1,4 @@
+package(default_visibility = ["//:__subpackages__"])
+
+# Allow any ts_library rules in this workspace to reference the config
+exports_files(["tsconfig.json"])

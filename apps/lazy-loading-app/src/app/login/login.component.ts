@@ -3,7 +3,8 @@ import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/fo
 import { ActivatedRoute, Router } from '@angular/router';
 import { first } from 'rxjs/operators';
 
-import { AlertService, AuthenticationService } from '../services';
+import { AlertService } from '../alert/alert.service';
+import { AuthenticationService } from '../auth/authentication.service';
 
 @Component({templateUrl: 'login.component.html'})
 export class LoginComponent implements OnInit {
@@ -49,7 +50,9 @@ export class LoginComponent implements OnInit {
         () => {
           this.router.navigate(['/home']);
         },
-        ({ error: { message } }) => {
+        ({ error = {} }) => {
+          console.log('==', error);
+          const { message } = error;
           this.alertService.error(message);
           this.loading = false;
         });

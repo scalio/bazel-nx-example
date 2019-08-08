@@ -1,0 +1,32 @@
+load("@npm_angular_bazel//:index.bzl", "ng_module")
+
+package(default_visibility = ["//:__subpackages__"])
+
+ng_module(
+    name = "app",
+    srcs = glob(
+        include = [
+            "*.ts",
+            "helpers/*.ts",
+        ],
+        exclude = ["*spec.ts"],
+    ),
+    assets = [
+        "app.component.html",
+    ],
+    tsconfig = "//:tsconfig.json",
+    deps = [
+        "//apps/lazy-loading-app/src/app/alert",
+        "//apps/lazy-loading-app/src/app/auth",
+        "//apps/lazy-loading-app/src/app/home",
+        "//apps/lazy-loading-app/src/app/login",
+        "//apps/lazy-loading-app/src/app/register",
+        "@npm//@angular/common",
+        "@npm//@angular/core",
+        "@npm//@angular/forms",
+        "@npm//@angular/platform-browser",
+        "@npm//@angular/router",
+        "@npm//rxjs",
+        "@npm//tslib",
+    ],
+)

@@ -13,6 +13,17 @@
     "typeRoots": [
       "node_modules/@types"
     ],
+//    "lib": [
+//      "dom",
+//      "es5",
+//      "es2015.collection",
+//      "es2015.iterable",
+//      "es2015.promise"
+//    ],
+    "rootDirs": [
+      "./apps/lazy-loading-app/src",
+      "./dist/bin/apps/lazy-loading-app/src"
+    ],
     "lib": [
       "es2017",
       "dom",

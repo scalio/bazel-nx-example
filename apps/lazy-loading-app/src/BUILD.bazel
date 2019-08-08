@@ -1,46 +1,41 @@
-package(default_visibility = ["//visibility:public"])
-
 load("@npm_angular_bazel//:index.bzl", "ng_module")
 load("@build_bazel_rules_nodejs//:defs.bzl", "history_server", "rollup_bundle")
-load("@build_bazel_rules_nodejs//:defs.bzl", "history_server", "rollup_bundle")
 load("@build_bazel_rules_nodejs//internal/web_package:web_package.bzl", "web_package")
-load("@npm_bazel_typescript//:index.bzl", "ts_devserver")
+load("@npm_bazel_typescript//:index.bzl", "ts_devserver", "ts_library")
 load("@io_bazel_rules_sass//:defs.bzl", "multi_sass_binary", "sass_binary")
 
+package(default_visibility = ["//:__subpackages__"])
+
 sass_binary(
-    name = "global_stylesheet",
+    name = "styles",
     src = glob([
         "styles.css",
         "styles.scss",
     ])[0],
-    output_name = "global_stylesheet.css",
 )
 
-multi_sass_binary(
-    name = "styles",
-    srcs = glob(
-        include = ["**/*.scss"],
-        exclude = ["styles.scss"],
-    ),
+ts_library(
+    name = "initialize_testbed",
+    testonly = 1,
+    srcs = [
+        "initialize_testbed.ts",
+    ],
+    deps = [
+        "@npm//@angular/core",
+        "@npm//@angular/platform-browser-dynamic",
+        "@npm//@types",
+    ],
 )
 
 ng_module(
     name = "src",
-    srcs = glob(
-        include = ["**/*.ts"],
-        exclude = [
-            "**/*.spec.ts",
-            "main.ts",
-            "test.ts",
-            "initialize_testbed.ts",
-        ],
-    ),
-    assets = glob([
-        "**/*.css",
-        "**/*.html",
-    ]) + ([":styles"] if len(glob(["**/*.scss"])) else []),
+    srcs = [
+        "main.dev.ts",
+        "main.prod.ts",
+    ],
+    tsconfig = "//:tsconfig.json",
     deps = [
-        "//libs/api-interface/src:api-interface",
+        "//apps/lazy-loading-app/src/app",
         "@npm//@angular/core",
         "@npm//@angular/forms",
         "@npm//@angular/platform-browser",
@@ -50,11 +45,85 @@ ng_module(
     ],
 )
 
+filegroup(
+    name = "rxjs_umd_modules",
+    srcs = [
+        ":rxjs_shims.js",
+        "@npm//:node_modules/rxjs/bundles/rxjs.umd.js",
+    ],
+)
+
+# We always strip these paths off the front of any assets we serve
+_ROOT_DIRS = [
+    "npm/node_modules/zone.js/dist",
+]
+
+# Files that we serve in both development and production
+_ASSETS = [
+    # This label references an output of the "styles" sass_binary above.
+    ":styles.css",
+
+    # We load zone.js outside the bundle. That's because it's a "pollyfill"
+    # which speculates that such features might be available in a browser.
+    # Also it's tricky to configure dead code elimination to understand that
+    # zone.js is used, given that we don't have any import statement that
+    # imports from it.
+    "@npm//:node_modules/zone.js/dist/zone.min.js",
+]
+
+# This devserver is written in Go and is super-fast.
+# It doesn't run any bundler or code splitter. Instead, it concatenates
+# named UMD and named AMD JavaScript code on-the-fly in-memory.
+# This scales really well for massive codebases.
+ts_devserver(
+    name = "devserver",
+    # serve these files rooted at /
+    additional_root_paths = _ROOT_DIRS,
+    # Serve these files but don't inject tags for them into the index file
+    # This might be because we only want to lazy-load these scripts on-demand,
+    # or because they aren't compatible with Require.js so we must use a runtime
+    # loader to load them.
+    data = [
+        "favicon.ico",
+    ],
+    entry_module = "nx_bazel_example/apps/lazy-loading-app/src/main.dev",
+    # <script> and <link> tags will be automatically injected into this index file
+    index_html = "index.html",
+    port = 4200,
+    # These scripts will be included in the JS bundle after require.js
+    # They should have only named UMD modules, or require.js will throw.
+    scripts = [
+        "@npm//:node_modules/tslib/tslib.js",
+        ":rxjs_umd_modules",
+    ],
+    serving_path = "/bundle.min.js",
+    # Serve these files in addition to the JavaScript bundle
+    # The corresponding <script> or <link> tags will be injected into the index_html
+    static_files = [
+        "@npm//:node_modules/zone.js/dist/zone.min.js",
+        ":styles",
+    ],
+    # Tell Bazel to build the sources first
+    deps = [":src"],
+)
+
 rollup_bundle(
     name = "bundle",
+    # These Angular routes may be lazy-loaded at runtime.
+    # So we tell Rollup that it can put them in separate JS chunks
+    # (code-splitting) for faster application startup.
+    # In the future, we could automatically gather these from statically
+    # analyzing the Angular sources.
+    #    additional_entry_points = [
+    #        "src/app/home/home.module.ngfactory",
+    #        "src/app/register/register.module.ngfactory",
+    #    ],
     entry_point = ":main.prod.ts",
     deps = [
-        "//apps/admin-app/src",
+        ":src",
+        "@npm//@angular/common",
+        "@npm//@angular/core",
+        "@npm//@angular/platform-browser",
         "@npm//@angular/router",
         "@npm//rxjs",
     ],
@@ -62,14 +131,24 @@ rollup_bundle(
 
 web_package(
     name = "prodapp",
-    assets = [
-        # do not sort
-        "@npm//:node_modules/zone.js/dist/zone.min.js",
+    additional_root_paths = _ROOT_DIRS + [
+        # In production mode we also serve some polyfills
+        "npm/node_modules/core-js/client",
+        "npm/node_modules/systemjs/dist",
+    ],
+    # do not sort
+    assets = _ASSETS + [
+        # For differential loading, we supply both an ESModule entry point and an es5 entry point
+        # The injector will put two complimentary script tags in the example.html
         ":bundle.min.js",
-        ":global_stylesheet",
+        ":bundle.min.es2015.js",
     ],
     data = [
         "favicon.ico",
+        "index.html",
+        ":bundle",
+        "@npm//:node_modules/core-js/client/core.min.js",
+        "@npm//:node_modules/systemjs/dist/system.js",
     ],
     index_html = "index.html",
 )
@@ -77,34 +156,9 @@ web_package(
 history_server(
     name = "prodserver",
     data = [":prodapp"],
-    templated_args = ["src/prodapp"],
-)
-
-filegroup(
-    name = "rxjs_umd_modules",
-    srcs = [
-        # do not sort
-        "@npm//:node_modules/rxjs/bundles/rxjs.umd.js",
-        ":rxjs_shims.js",
+    # '-a src/prodapp' will ask history-server to scan for all apps under the given folder
+    templated_args = [
+        "-a",
+        "apps/lazy-loading-app/src/prodapp",
     ],
-)
-
-ts_devserver(
-    name = "devserver",
-    data = [
-        "favicon.ico",
-    ],
-    entry_module = "nx_bazel_example/apps/lazy-loading-app/src/main.dev",
-    index_html = "index.html",
-    port = 4200,
-    scripts = [
-        "@npm//:node_modules/tslib/tslib.js",
-        ":rxjs_umd_modules",
-    ],
-    serving_path = "/bundle.min.js",
-    static_files = [
-        "@npm//:node_modules/zone.js/dist/zone.min.js",
-        ":global_stylesheet",
-    ],
-    deps = [":src"],
 )
