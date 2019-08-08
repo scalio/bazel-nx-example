@@ -3,14 +3,14 @@ import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
-import { RegisterComponent } from './register.component';
+import { LoginComponent } from './login.component';
 
 @NgModule({
   imports: [
-    ReactiveFormsModule,
     CommonModule,
     RouterModule,
+    ReactiveFormsModule,
   ],
-  declarations: [RegisterComponent],
+  declarations: [LoginComponent],
 })
-export class RegisterModule { }
+export class LoginModule { }

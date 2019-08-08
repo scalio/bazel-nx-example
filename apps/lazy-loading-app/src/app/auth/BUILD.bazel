@@ -1,0 +1,22 @@
+load("@npm_angular_bazel//:index.bzl", "ng_module")
+
+package(default_visibility = ["//:__subpackages__"])
+
+ng_module(
+    name = "auth",
+    srcs = [
+        "auth.guard.ts",
+        "auth.module.ts",
+        "authentication.service.ts",
+        "index.ts",
+    ],
+    tsconfig = "//:tsconfig.json",
+    deps = [
+        "//libs/api-interface/src:api-interface",
+        "@npm//@angular/common",
+        "@npm//@angular/core",
+        "@npm//@angular/router",
+        "@npm//rxjs",
+        "@npm//tslib",
+    ],
+)

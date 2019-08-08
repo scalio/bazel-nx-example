@@ -1,13 +1,12 @@
 ﻿import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 
-import { AlertService } from '../services';
+import { AlertService } from './alert.service';
 
 @Component({
     selector: 'lazy-alert',
     templateUrl: 'alert.component.html',
 })
-
 export class AlertComponent implements OnInit, OnDestroy {
     private subscription: Subscription;
     message: any;

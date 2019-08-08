@@ -1,7 +1,6 @@
-package(default_visibility = ["//visibility:public"])
-
-# TS compile
 load("@npm_bazel_typescript//:index.bzl", "ts_library")
+
+package(default_visibility = ["//:__subpackages__"])
 
 ts_library(
     name = "api-interface",

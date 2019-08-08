@@ -4,7 +4,7 @@ import { ISignUpDto, SignedUser } from '@app/api-interface';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-@Injectable({ providedIn: 'root' })
+@Injectable()
 export class AuthenticationService {
     private currentUserSubject: BehaviorSubject<SignedUser>;
     public currentUser: Observable<SignedUser>;

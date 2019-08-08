@@ -13,7 +13,9 @@
   }
 })(function(exports, rxjs) {
   'use strict';
-  Object.keys(rxjs.operators).forEach(function(key) { exports[key] = rxjs.operators[key]; });
+  Object.keys(rxjs.operators).forEach(function(key) {
+    exports[key] = rxjs.operators[key];
+  });
   Object.defineProperty(exports, '__esModule', {value: true});
 });
 
@@ -27,6 +29,8 @@
   }
 })(function(exports, rxjs) {
   'use strict';
-  Object.keys(rxjs.testing).forEach(function(key) { exports[key] = rxjs.testing[key]; });
+  Object.keys(rxjs.testing).forEach(function(key) {
+    exports[key] = rxjs.testing[key];
+  });
   Object.defineProperty(exports, '__esModule', {value: true});
 });

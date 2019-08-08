@@ -3,7 +3,8 @@ import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/fo
 import { Router } from '@angular/router';
 import { first } from 'rxjs/operators';
 
-import { AlertService, AuthenticationService } from '../services';
+import { AlertService } from '../alert/alert.service';
+import { AuthenticationService } from '../auth/authentication.service';
 
 @Component({templateUrl: 'register.component.html'})
 export class RegisterComponent implements OnInit {

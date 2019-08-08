@@ -1,0 +1,21 @@
+load("@npm_angular_bazel//:index.bzl", "ng_module")
+
+package(default_visibility = ["//:__subpackages__"])
+
+ng_module(
+    name = "login",
+    srcs = [
+        "login.component.ts",
+        "login.module.ts",
+    ],
+    assets = glob(["*.html"]),
+    tsconfig = "//:tsconfig.json",
+    deps = [
+        "//apps/lazy-loading-app/src/app/alert",
+        "//apps/lazy-loading-app/src/app/auth",
+        "@npm//@angular/core",
+        "@npm//@angular/forms",
+        "@npm//@angular/router",
+        "@npm//rxjs",
+    ],
+)

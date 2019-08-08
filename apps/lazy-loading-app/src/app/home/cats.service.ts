@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { CatModel, ICreateCatDto } from '@app/api-interface';
 import { Observable } from 'rxjs';
 
-@Injectable({ providedIn: 'root' })
+@Injectable()
 export class CatsService {
   private apiUrl = 'http://localhost:3000';
 
