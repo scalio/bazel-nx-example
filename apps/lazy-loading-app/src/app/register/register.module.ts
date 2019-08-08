@@ -9,7 +9,7 @@ import { RegisterComponent } from './register.component';
   imports: [
     ReactiveFormsModule,
     CommonModule,
-    RouterModule,
+    RouterModule.forChild([{path: '', component: RegisterComponent}]),
   ],
   declarations: [RegisterComponent],
 })

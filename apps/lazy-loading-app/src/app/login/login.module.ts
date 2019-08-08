@@ -8,7 +8,7 @@ import { LoginComponent } from './login.component';
 @NgModule({
   imports: [
     CommonModule,
-    RouterModule,
+    RouterModule.forChild([{path: '', component: LoginComponent}]),
     ReactiveFormsModule,
   ],
   declarations: [LoginComponent],

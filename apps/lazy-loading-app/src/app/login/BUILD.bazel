@@ -4,10 +4,10 @@ package(default_visibility = ["//:__subpackages__"])
 
 ng_module(
     name = "login",
-    srcs = [
-        "login.component.ts",
-        "login.module.ts",
-    ],
+    srcs = glob(
+        include = ["*.ts"],
+        exclude = ["*spec.ts"],
+    ),
     assets = glob(["*.html"]),
     tsconfig = "//:tsconfig.json",
     deps = [
