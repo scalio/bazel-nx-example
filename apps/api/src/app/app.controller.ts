@@ -2,7 +2,7 @@ import { Controller, Get, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { ApiBearerAuth } from '@nestjs/swagger';
 
-import { Message } from '@app/api-interface';
+import { Message } from '@api-interface';
 
 import { AppService } from './app.service';
 

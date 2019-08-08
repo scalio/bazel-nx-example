@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { SignedUser } from '@app/api-interface';
+import { SignedUser } from '@api-interface';
 
 import { AuthenticationService } from './auth/authentication.service';
 

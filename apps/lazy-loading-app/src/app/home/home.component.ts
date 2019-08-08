@@ -1,6 +1,6 @@
 ﻿import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { CatModel, ICreateCatDto, SignedUser } from '@app/api-interface';
+import { CatModel, ICreateCatDto, SignedUser } from '@api-interface';
 import { Subscription } from 'rxjs';
 import { first } from 'rxjs/operators';
 
