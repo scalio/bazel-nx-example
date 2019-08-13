@@ -1,6 +1,6 @@
 ﻿import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { CatModel, ICreateCatDto, SignedUser } from '@api-interface';
+import { ICat, ICreateCatDto, ISignedUser } from '@proto-interface';
 import { Subscription } from 'rxjs';
 import { first } from 'rxjs/operators';
 
@@ -10,9 +10,9 @@ import { CatsService } from './cats.service';
 
 @Component({ templateUrl: 'home.component.html' })
 export class HomeComponent implements OnInit, OnDestroy {
-  currentUser: SignedUser;
+  currentUser: ISignedUser;
   currentUserSubscription: Subscription;
-  cats: CatModel[] = [];
+  cats: ICat[] = [];
 
   catForm: FormGroup;
   loading = false;

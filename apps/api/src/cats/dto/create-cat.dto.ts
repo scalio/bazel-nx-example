@@ -1,5 +1,5 @@
-import { ICreateCatDto } from '@api-interface';
 import { ApiModelProperty } from '@nestjs/swagger';
+import { ICreateCatDto } from '@proto-interface';
 import { IsInt, IsNotEmpty, Max, Min } from 'class-validator';
 
 export class CreateCatDto implements ICreateCatDto {

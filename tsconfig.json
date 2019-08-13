@@ -35,6 +35,9 @@
     "paths": {
       "@api-interface": [
         "libs/api-interface/src/index.ts"
+      ],
+      "@proto-interface": [
+        "libs/proto-interface/src/index.ts"
       ]
     }
   },
