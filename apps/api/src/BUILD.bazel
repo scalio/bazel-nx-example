@@ -17,12 +17,10 @@ ts_library(
         "//apps/api/src/auth",
         "//apps/api/src/cats",
         "//apps/api/src/user",
-        "@npm//@nestjs",
         "@npm//@nestjs/common",
         "@npm//@nestjs/core",
         "@npm//@nestjs/platform-express",
         "@npm//@nestjs/swagger",
-        "@npm//@types",
         "@npm//cors",
         "@npm//helmet",
     ],
@@ -45,8 +43,6 @@ nodejs_image(
     name = "nodejs_image",
     data = RUNTIME_DEPS,
     entry_point = ":main.ts",
-    # This will be put into its own layer.
-    node_modules = "@npm//:node_modules",
 )
 
 # Note it will not cross-compile on Mac OS to linux:

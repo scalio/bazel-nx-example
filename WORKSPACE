@@ -20,16 +20,11 @@ http_archive(
     urls = ["https://github.com/bazelbuild/rules_nodejs/releases/download/0.35.0/rules_nodejs-0.35.0.tar.gz"],
 )
 
-# Fetch sass rules for compiling sass files
-RULES_SASS_VERSION = "86ca977cf2a8ed481859f83a286e164d07335116"
-
-RULES_SASS_SHA256 = "4f05239080175a3f4efa8982d2b7775892d656bb47e8cf56914d5f9441fb5ea6"
-
 http_archive(
     name = "io_bazel_rules_sass",
-    sha256 = RULES_SASS_SHA256,
-    strip_prefix = "rules_sass-%s" % RULES_SASS_VERSION,
-    url = "https://github.com/bazelbuild/rules_sass/archive/%s.zip" % RULES_SASS_VERSION,
+    sha256 = "4f05239080175a3f4efa8982d2b7775892d656bb47e8cf56914d5f9441fb5ea6",
+    strip_prefix = "rules_sass-86ca977cf2a8ed481859f83a286e164d07335116",
+    url = "https://github.com/bazelbuild/rules_sass/archive/86ca977cf2a8ed481859f83a286e164d07335116.zip",
 )
 
 # Setup the Node.js toolchain
