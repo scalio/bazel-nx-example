@@ -9,19 +9,19 @@ export class CatsService {
 
   constructor(private http: HttpClient) {}
 
-  getAll(): Observable<ICat[]> {
-    return this.http.get<ICat[]>(`${this.apiUrl}/cats`);
+  getAll(): Observable<Array<Required<ICat>>> {
+    return this.http.get<Array<Required<ICat>>>(`${this.apiUrl}/cats`);
   }
 
-  getById(id: number): Observable<ICat> {
-    return this.http.get<ICat>(`${this.apiUrl}/cats/${id}`);
+  getById(id: number): Observable<Required<ICat>> {
+    return this.http.get<Required<ICat>>(`${this.apiUrl}/cats/${id}`);
   }
 
-  create(createCatDto: ICreateCatDto): Observable<ICat> {
-    return this.http.post<ICat>(`${this.apiUrl}/cats`, createCatDto);
+  create(createCatDto: Required<ICreateCatDto>): Observable<Required<ICat>> {
+    return this.http.post<Required<ICat>>(`${this.apiUrl}/cats`, createCatDto);
   }
 
-  delete(id: number): Observable<ICat> {
-    return this.http.delete<ICat>(`${this.apiUrl}/cats/${id}`);
+  delete(id: number): Observable<Required<ICat>> {
+    return this.http.delete<Required<ICat>>(`${this.apiUrl}/cats/${id}`);
   }
 }

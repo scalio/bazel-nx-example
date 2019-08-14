@@ -10,9 +10,9 @@ import { CatsService } from './cats.service';
 
 @Component({ templateUrl: 'home.component.html' })
 export class HomeComponent implements OnInit, OnDestroy {
-  currentUser: ISignedUser;
+  currentUser: Required<ISignedUser>;
   currentUserSubscription: Subscription;
-  cats: ICat[] = [];
+  cats: Array<Required<ICat>> = [];
 
   catForm: FormGroup;
   loading = false;
@@ -53,7 +53,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     }
 
     this.loading = true;
-    const createCatDto: ICreateCatDto = {
+    const createCatDto: Required<ICreateCatDto> = {
       name: this.f.name.value,
       age: this.f.age.value,
     };

@@ -6,7 +6,7 @@ import { AuthenticationService } from './auth/authentication.service';
 
 @Component({ selector: 'lazy-root', templateUrl: 'app.component.html' })
 export class AppComponent {
-  currentUser: ISignedUser;
+  currentUser: Required<ISignedUser>;
 
   constructor(
     private router: Router,

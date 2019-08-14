@@ -6,21 +6,23 @@ import { map } from 'rxjs/operators';
 
 @Injectable()
 export class AuthenticationService {
-    private currentUserSubject: BehaviorSubject<ISignedUser>;
-    public currentUser: Observable<ISignedUser>;
+    private currentUserSubject: BehaviorSubject<Required<ISignedUser>>;
+    public currentUser: Observable<Required<ISignedUser>>;
     private apiUrl = 'http://localhost:3000';
 
     constructor(private http: HttpClient) {
-        this.currentUserSubject = new BehaviorSubject<ISignedUser>(JSON.parse(localStorage.getItem('currentUser')));
+        this.currentUserSubject = new BehaviorSubject<Required<ISignedUser>>(
+          JSON.parse(localStorage.getItem('currentUser')),
+        );
         this.currentUser = this.currentUserSubject.asObservable();
     }
 
-    public get currentUserValue(): ISignedUser {
+    public get currentUserValue(): Required<ISignedUser> {
         return this.currentUserSubject.value;
     }
 
     login(username: string, password: string) {
-        return this.http.post<ISignedUser>(`${this.apiUrl}/auth/sign-in`, { username, password })
+        return this.http.post<Required<ISignedUser>>(`${this.apiUrl}/auth/sign-in`, { username, password })
             .pipe(map((user) => {
                 // login successful if there's a jwt token in the response
                 if (user && user.token) {
@@ -33,7 +35,7 @@ export class AuthenticationService {
             }));
     }
 
-    register(user: ISignUpDto) {
+    register(user: Required<ISignUpDto>) {
       return this.http.post(`${this.apiUrl}/auth/sign-up`, user);
     }
 

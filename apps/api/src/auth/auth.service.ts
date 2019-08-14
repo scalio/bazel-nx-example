@@ -13,7 +13,7 @@ export class AuthService {
     private readonly jwtService: JwtService,
   ) {}
 
-  async createToken(username: string): Promise<ISignedUser> {
+  async createToken(username: string): Promise<Required<ISignedUser>> {
     const { firstName, lastName } = await this.userService.getUserByUsername(username);
     const payload: JwtPayload = { username, firstName, lastName };
 

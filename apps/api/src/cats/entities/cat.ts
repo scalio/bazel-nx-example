@@ -2,7 +2,7 @@ import { ICat } from '@proto-interface';
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
-export class Cat implements ICat {
+export class Cat implements Required<ICat> {
   @PrimaryGeneratedColumn()
   id: number;
 

@@ -3,7 +3,7 @@ import { IMessage } from '@proto-interface';
 
 @Injectable()
 export class AppService {
-  getData(): IMessage {
+  getData(): Required<IMessage> {
     return { message: 'Welcome to api!' };
   }
 }

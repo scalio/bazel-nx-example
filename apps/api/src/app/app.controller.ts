@@ -13,7 +13,7 @@ export class AppController {
 
   @Get('hello')
   @UseGuards(AuthGuard('jwt'))
-  getData(): IMessage {
+  getData(): Required<IMessage> {
     return this.appService.getData();
   }
 }

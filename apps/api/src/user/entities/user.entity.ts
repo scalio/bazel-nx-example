@@ -2,7 +2,7 @@ import { IUser } from '@proto-interface';
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
-export class User implements IUser {
+export class User implements Required<IUser> {
   @PrimaryGeneratedColumn()
   id: number;
 
