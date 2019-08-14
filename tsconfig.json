@@ -13,16 +13,8 @@
     "typeRoots": [
       "node_modules/@types"
     ],
-//    "lib": [
-//      "dom",
-//      "es5",
-//      "es2015.collection",
-//      "es2015.iterable",
-//      "es2015.promise"
-//    ],
     "rootDirs": [
-      "./apps/lazy-loading-app/src",
-      "./dist/bin/apps/lazy-loading-app/src"
+      "./dist/bin"
     ],
     "lib": [
       "es2017",
@@ -37,7 +29,7 @@
         "libs/api-interface/src/index.ts"
       ],
       "@proto-interface": [
-        "libs/proto-interface/src/index.ts"
+        "dist/bin/libs/proto-interface/src/index"
       ]
     }
   },
