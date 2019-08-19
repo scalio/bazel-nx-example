@@ -1,10 +1,9 @@
-
 ![Bazel at Scalio](https://raw.githubusercontent.com/scalio/bazel-status/master/assets/scalio-bnx.svg?sanitize=true)
 
 <h1 align="center">Bazel Nx-Monorepo Starter</h1>
 
 <p align="center">
-  A full-stack starter app made with <a href="https://nx.dev" target="_blank">Nx</a>, <a href="https://angular.io/" target="_blank">Angular</a>, and <a href="https://nestjs.com/" target="_blank">NestJS</a> -- built <b>using <a href="https://bazel.build/" target="_blank">Bazel</a></b>
+  A full-stack starter app made with <a href="https://nx.dev">Nx</a>, <a href="https://angular.io/">Angular</a>, and <a href="https://nestjs.com/">NestJS</a> -- built <b>using <a href="https://bazel.build/">Bazel</a></b>
 </p>
 
 &nbsp;
