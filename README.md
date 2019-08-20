@@ -3,7 +3,7 @@
 <h1 align="center">Bazel Nx-Monorepo Starter</h1>
 
 <p align="center">
-  A full-stack starter app made with <a href="https://nx.dev">Nx</a>, <a href="https://angular.io/">Angular</a>, and <a href="https://nestjs.com/">NestJS</a> -- built <b>using <a href="https://bazel.build/">Bazel</a></b>
+  A full-stack starter app written in <a href="https://nx.dev">Nx</a>, <a href="https://angular.io/">Angular</a>, and <a href="https://nestjs.com/">NestJS</a> -- built <b>using <a href="https://bazel.build/">Bazel</a></b>
 </p>
 
 &nbsp;
