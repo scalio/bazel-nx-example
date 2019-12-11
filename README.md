@@ -1,4 +1,4 @@
-![Bazel at Scalio](https://raw.githubusercontent.com/scalio/bazel-status/master/assets/scalio-bnx.svg?sanitize=true)
+![Bazel at Scalio](https://raw.githubusercontent.com/scalio/bazel/master/assets/scalio-bnx.svg?sanitize=true)
 
 <h1 align="center">Bazel Nx-Monorepo Starter</h1>
 
@@ -59,7 +59,7 @@ Created by [@rayman1104](https://github.com/rayman1104/) @ [Scalio](https://scal
 <p align="center">
     <br/>
     <a href="https://scal.io/">
-        <img src="https://raw.githubusercontent.com/scalio/bazel-status/master/assets/scalio-logo.svg?sanitize=true" />
+        <img src="https://raw.githubusercontent.com/scalio/bazel/master/assets/scalio-logo.svg?sanitize=true" />
     </a>
     <br/>
 </p>
